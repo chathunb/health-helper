@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: health-helper-web-svc
+    namespace: default
+    labels:
+      app: health-helper-web
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30304
+    port: 8000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: health-helper-web
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 127.0.0.1

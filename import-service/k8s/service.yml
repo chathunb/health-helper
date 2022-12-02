@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: service-import-gateway-svc
+    namespace: default
+    labels:
+      app: service-importer
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30305
+    port: 8080
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: service-importer
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 127.0.0.1

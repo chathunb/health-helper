@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: service-importer
+  labels:
+    app: service-importer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-importer
+  template:
+    metadata:
+      labels:
+        app: service-importer
+    spec:
+      containers:
+        - name: service-importer-container
+          image: health-helper/service-import:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 4Gi

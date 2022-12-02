@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: nest-patient-k8
+  labels:
+    app: nest-patient
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nest-patient
+  template:
+    metadata:
+      labels:
+        app: nest-patient
+    spec:
+      containers:
+        - name: nest-patient-container
+          image: health-helper/patient-service:latest
+          imagePullPolicy: Never
+          env:
+            - name: PORT
+          resources:
+            requests:
+              cpu: 250m
+              memory: "128Mi"
+            limits:
+              cpu: 500m
+              memory: "2Gi"

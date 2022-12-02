@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: health-helper-web
+  labels:
+    app: health-helper-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: health-helper-web
+  template:
+    metadata:
+      labels:
+        app: health-helper-web
+    spec:
+      containers:
+        - name: health-helper-web-container
+          image: health-helper/health-helper-web:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          env:
+            - name: PORT
+          resources:
+            requests:
+              cpu: 250m
+              memory: "128Mi"
+            limits:
+              cpu: 500m
+              memory: "512Mi"
